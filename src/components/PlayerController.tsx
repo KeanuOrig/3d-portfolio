@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CapsuleCollider, RigidBody } from "@react-three/rapier";
 import * as THREE from "three";
@@ -20,16 +20,18 @@ export default function PlayerController() {
         },
       }
     );
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const rb = useRef<any>(null);
     const container = useRef<any>(null);
     const Player = useRef<any>(null);
-  
-    const [animation, setAnimation] = useState("idle");
+    const cameraTarget = useRef<any>(null);
+    const cameraPosition = useRef<any>(null);
+    /* eslint-enable @typescript-eslint/no-explicit-any */
+
+    /* const [animation, setAnimation] = useState("idle"); */
   
     const PlayerRotationTarget = useRef(0);
     const rotationTarget = useRef(0);
-    const cameraTarget = useRef<any>(null);
-    const cameraPosition = useRef<any>(null);
     const cameraWorldPosition = useRef(new THREE.Vector3());
     const cameraLookAtWorldPosition = useRef(new THREE.Vector3());
     const cameraLookAt = useRef(new THREE.Vector3());
@@ -37,10 +39,10 @@ export default function PlayerController() {
     const isClicking = useRef<boolean>(false);
   
     useEffect(() => {
-      const onMouseDown = (e: any) => {
+      const onMouseDown = () => {
         isClicking.current = true;
       };
-      const onMouseUp = (e: any) => {
+      const onMouseUp = () => {
         isClicking.current = false;
       };
       document.addEventListener("mousedown", onMouseDown);
@@ -105,12 +107,12 @@ export default function PlayerController() {
             Math.cos(rotationTarget.current + PlayerRotationTarget.current) *
             speed;
           if (speed === RUN_SPEED) {
-            setAnimation("run");
+            /* setAnimation("run"); */
           } else {
-            setAnimation("walk");
+            /* setAnimation("walk"); */
           }
         } else {
-          setAnimation("idle");
+          /* setAnimation("idle"); */
         }
         Player.current.rotation.y = lerpAngle(
           Player.current.rotation.y,
